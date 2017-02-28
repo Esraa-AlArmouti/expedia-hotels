@@ -7,7 +7,7 @@
     <?php if(!empty($filtered_data)):?>
         <?php for($i = 0; $i < count($filtered_data); $i++){?>
             <div class="hotel-list">
-                <a class="hotel-url" href="<?php echo $filtered_data[$i]->hotelUrls->hotelInfositeUrl; ?>">
+                <a class="hotel-url" href="<?php echo urldecode($filtered_data[$i]->hotelUrls->hotelInfositeUrl); ?>">
                     <div class="col-lg-3">
                         <img src="<?php echo $filtered_data[$i]->hotelInfo->hotelImageUrl; ?>"/>
                     </div>
