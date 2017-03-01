@@ -10,9 +10,6 @@ spl_autoload_register(function ($class_name) {
     include ('assets/libraries/' . $class_name . '.php');
 });
 
-$hotels  = new Util();
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">

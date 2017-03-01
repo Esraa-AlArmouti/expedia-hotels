@@ -1,4 +1,8 @@
-<?php include('header.php');?>
-<?php include('form.php');?>
-<?php include('result.php');?>
-<?php include('footer.php');?>
+<?php
+
+    $config = include './config/Configuration.php';
+
+    include($config['views']['header']);
+    include($config['views']['form']);
+    include($config['views']['footer']);
+?>

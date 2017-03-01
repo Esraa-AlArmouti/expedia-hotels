@@ -1,9 +1,5 @@
 <div class="result">
-    <?php
-    if (!empty($_POST)){
-        $filtered_data = Util::findMatches();
-    }
-    ?>
+    <h2>Search result</h2>
     <?php if(!empty($filtered_data)):?>
         <?php for($i = 0; $i < count($filtered_data); $i++){?>
             <div class="hotel-list">
