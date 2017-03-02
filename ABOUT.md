@@ -1,38 +1,26 @@
-This application is created for finding the best hotel deals, so I created a form that makes the user put his/her given information
-and the form will search the local Jason file instead of requesting a Jason URL to find the result.
-My point of downloading JAson file is to make it more faster and secured in the website host itself better tht requested it 
-from another domain.
-I've been using PHP instead of Java, Ruby or Python because I don't know any of these languages but im looking forward to learn it,
-it's also because PHP is a server side language and it's easy to follow.
-what I'm trying to do with this small application is searching for each given result by the user, so I tool the Destination input value,
-start date and end date and compared it to the given Jason sample.
-I created Util class so i can make as much as methods and functions that I need to complete the rearch process, Util class contains
-two functions; the first one called CalculateLengthOfStay takes two parameters to calculate the length of stay and the other function
-named changeDateFormat created to change the format for user entered date. changeDateFormat is made because it was written at the task
-description that the format should be 2017-05-03 and at Jason file it has the opposite format as: 03/21/2017 so I made a function to 
-convert any given date to the format as the one in Jason file.
-I took the Jasin file and put in in an array to search in it by using for loop and if statement, the reason for using this way is that
-I might have multiple and special cases that I should be solved.
-one of the issues I have seen that "numberOfRoomsLeft" has the same value and it's zero. I thought that the user could search of a hotel
-and he/she can't find a room in it so why it would be shown? there is no need for it to be shown. I might misunderstood it, maybe.
-The task took me a while to do a small part of it due the short time and the low knowledge of JAVA,Ruby and Python. I've tried to learn
-s bit about Java so I can make the task but I need more time to learn JAVA and I don't want to waste solving the tast because of this,
-so I tried to do it by using PHP.
-I wanted to compare Jason data by using if statment as the following:
-1. one part of the statment for destination sity or country, it looks for a string keyword and returns the index of it if it's exist.
-2. start date it looks for travel start date for hotel and return true if the start travel date is the same.
-3. end date has the same functionality as start date.
-4. find the length of stay after calculating it.
-all four points concatenated at the same point, for example looking for Budapest destination,start date: 2017-3-21 and end date: 2017-3-24
-all of them will be found and it will also look up for 3 days of stay as well.
-I was looking for activating the following but due the time I couldn't spend more that 8 hours on it with this documentation:
-1."averagePriceValue" searching for a minimum price or maximum price
-2."hotelTotalBaseRate" filtering the minimum and maximum base rate
-3."hotelTotalTaxesAndFees" filtering the minimum and maximum total tax fees
-4."hotelTotalMandatoryTaxesAndFees" filtering the minimum and maximum total mandotary tax fees
-5."originalPricePerNight" filtering the minimum and maximum price per night
-6."numberOfPeopleViewing" filtering the minimum and maximum people views
-7."numberOfPeopleBooked" filtering the minimum and maximum people booked
-8."movingAverageScore".
+My assumption for Expedia hotel deals project declares by getting all search data from form.php and searching for it by requesting
+URL that is already build from the search data and get all the resault and show it in resault.php file at the destination file search.php 
 
-I made the result lists all hotel deals and it's linked to hotel itself, it also shows the image, address, description for each listed hotel.
+Expedia hotel deals project works as the following:
+1. creating the structure for default page and prepare form.php file to put all search values in it's fields and to direct the result for search process to search.php page.
+2. search process will be done according to the given certain query parameters which is already has it's fields in form.php and they are the following:
+    destinationName
+    regionIds
+    minTripStartDate
+    maxTripStartDate
+    lengthOfStay
+    minStarRating
+    maxStarRating
+    minTotalRate
+    maxTotalRate
+    minGuestRating
+    maxGuestRating
+3. config/configuration.php file declares all needed information there, such as baseURL that will be needed at request class.
+4. after entering the wanted search data to look for, the form will direct user to search.php page, search.php will call search method at helpers class and it will store it in $filtered_data variable and it takes all post data for the form. $filtered_data will be listed with it's data at resault.php file.
+5. At helpers class it contains search method that receive search wanted data, search method contains a $defaultParams variable that has the default parameters that will be called in the requested URL. This method will check if the received data not empty to continue on requesting action. it will create an object from request class.
+6. Request class has a property called baseUrl that will take baseUrl from configuration.php file from it's array.
+7. back to step 5 after creating an object from request class type it will check each filled field from the form and it will put it in an array called $urlParameters, $urlParameters will be merged with $filtered_data array and it will be stored in $finalParams, the merge step is done because json url won't give a result if the default parameters is not sent by url request.
+8. after saving all wanted data it will call run method for request class object. run method will receive the $urlParameters from doing step 7. run method will check if the received array is not empty and it will build request url using http_build_query finction that is already given from php.
+   it will put the baseUrl with the built URL, then it will request to URL using file_get_contents function from php and return the decoded json file to request class object and it will be stored in $result variable.
+9. after that it will check if $result is not empty and if it contains offers and Hotel objects inside it, if it's true return the result of $result->offers->Hotel objects to store it in $filtered_data in search.php file
+10. all stored data will be listed in result.php file and if it has no result it will show a message that the search for hotel deals are not found.
